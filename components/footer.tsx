@@ -8,6 +8,7 @@ export default function Footer() {
 					<Link
 						className="font-semibold"
 						href="https://github.com/haiueom/nimetop"
+						target="_blank"
 					>
 						NimeTop
 					</Link>{" "}
@@ -15,6 +16,7 @@ export default function Footer() {
 					<Link
 						className="font-semibold"
 						href="https://github.com/haiueom"
+						target="_blank"
 					>
 						Ilham Taufiq
 					</Link>

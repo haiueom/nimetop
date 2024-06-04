@@ -12,16 +12,36 @@ import Autoplay from "embla-carousel-autoplay";
 
 const items = [
 	{
-		src: "/img/banner-1.jpg",
+		src: "/img/banner/1.jpg",
 		alt: "gambar banner 1",
 	},
 	{
-		src: "/img/banner-2.jpg",
+		src: "/img/banner/2.jpg",
 		alt: "gambar banner 2",
 	},
 	{
-		src: "/img/banner-3.jpg",
+		src: "/img/banner/3.jpg",
 		alt: "gambar banner 3",
+	},
+	{
+		src: "/img/banner/4.jpg",
+		alt: "gambar banner 4",
+	},
+	{
+		src: "/img/banner/5.jpg",
+		alt: "gambar banner 5",
+	},
+	{
+		src: "/img/banner/6.jpg",
+		alt: "gambar banner 6",
+	},
+	{
+		src: "/img/banner/7.jpg",
+		alt: "gambar banner 7",
+	},
+	{
+		src: "/img/banner/8.jpg",
+		alt: "gambar banner 8",
 	},
 ];
 

@@ -13,7 +13,7 @@ function MobileNav() {
 	return (
 		<div className="flex items-center gap-2 md:hidden">
 			<Button variant="secondary" size="icon" asChild>
-				<Link href="https://github.com/haiueom/nimetop">
+				<Link href="https://github.com/haiueom/nimetop" target="_blank">
 					<Github />
 				</Link>
 			</Button>
@@ -81,6 +81,7 @@ function DesktopNav() {
 					<Link
 						className="font-bold"
 						href="https://github.com/haiueom/nimetop"
+						target="_blank"
 					>
 						Github <ArrowUpRight className="pl-1" />
 					</Link>
