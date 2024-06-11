@@ -6,7 +6,7 @@ export default function Footer() {
 			<div className="flex flex-col items-center gap-4">
 				<p>
 					<Link
-						className="font-semibold"
+						className="font-semibold hover:text-primary"
 						href="https://github.com/haiueom/nimetop"
 						target="_blank"
 					>
@@ -14,7 +14,7 @@ export default function Footer() {
 					</Link>{" "}
 					by{" "}
 					<Link
-						className="font-semibold"
+						className="font-semibold hover:text-primary"
 						href="https://github.com/haiueom"
 						target="_blank"
 					>

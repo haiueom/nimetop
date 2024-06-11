@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Github, Menu } from "lucide-react";
 import Link from "next/link";
@@ -8,6 +9,14 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/components/themeToggle";
+import { usePathname } from "next/navigation";
+
+const links = [
+	{ href: "/anime", label: "Anime" },
+	{ href: "/manga", label: "Manga" },
+	{ href: "/people", label: "People" },
+	{ href: "/character", label: "Character" },
+];
 
 function MobileNav() {
 	return (
@@ -25,26 +34,18 @@ function MobileNav() {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
-					<DropdownMenuItem asChild>
-						<Link className="font-medium" href="/anime">
-							Anime
-						</Link>
-					</DropdownMenuItem>
-					<DropdownMenuItem asChild>
-						<Link className="font-medium" href="/manga">
-							Manga
-						</Link>
-					</DropdownMenuItem>
-					<DropdownMenuItem asChild>
-						<Link className="font-medium" href="/people">
-							People
-						</Link>
-					</DropdownMenuItem>
-					<DropdownMenuItem asChild>
-						<Link className="font-medium" href="/character">
-							Character
-						</Link>
-					</DropdownMenuItem>
+					{links.map(
+						(
+							item: { href: string; label: string },
+							index: number,
+						) => (
+							<DropdownMenuItem asChild key={index}>
+								<Link className="font-medium" href={item.href}>
+									{item.label}
+								</Link>
+							</DropdownMenuItem>
+						),
+					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</div>
@@ -52,29 +53,25 @@ function MobileNav() {
 }
 
 function DesktopNav() {
+	const pathname = usePathname();
 	return (
 		<>
 			<div className="hidden items-center gap-2 md:flex">
-				<Button variant="ghost" asChild>
-					<Link className="font-bold" href="/anime">
-						Anime
-					</Link>
-				</Button>
-				<Button variant="ghost" asChild>
-					<Link className="font-bold" href="/manga">
-						Manga
-					</Link>
-				</Button>
-				<Button variant="ghost" asChild>
-					<Link className="font-bold" href="/character">
-						Character
-					</Link>
-				</Button>
-				<Button variant="ghost" asChild>
-					<Link className="font-bold" href="/people">
-						People
-					</Link>
-				</Button>
+				{links.map(
+					(item: { href: string; label: string }, index: number) => (
+						<Button
+							variant={
+								item.href === pathname ? "secondary" : "ghost"
+							}
+							asChild
+							key={index}
+						>
+							<Link className="font-bold" href={item.href}>
+								{item.label}
+							</Link>
+						</Button>
+					),
+				)}
 			</div>
 			<div className="hidden items-center gap-2 md:flex">
 				<Button variant="default" asChild>
