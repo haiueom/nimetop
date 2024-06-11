@@ -15,14 +15,14 @@ export default function CardList({
 	};
 }) {
 	return (
-		<section className="w-full space-y-10 mt-4">
+		<section className="mt-4 w-full space-y-10">
 			<div className="text-center">
-				<h2 className="text-4xl font-bold mb-4">{title}</h2>
+				<h2 className="mb-4 text-4xl font-bold">{title}</h2>
 				<p>Peringkat berdasarkan MyAnimeList.</p>
 			</div>
 			{err.isError ? (
-				<Card className="p-4 shadow-md bg-secondary w-full h-[200px] text-center flex items-center justify-center">
-					<p className="text-red-500 font-bold text-md">
+				<Card className="flex h-[200px] w-full items-center justify-center bg-secondary p-4 text-center shadow-md">
+					<p className="text-md font-bold text-red-500">
 						{err.message}
 					</p>
 				</Card>

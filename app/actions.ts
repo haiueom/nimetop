@@ -1,6 +1,21 @@
 "use server";
 
-const valid = 300;
+import fs from "fs";
+import path from "path";
+
+export async function getBannerImages() {
+	const imagesDirectory = path.join(process.cwd(), "public/img/banner");
+	const filenames = fs.readdirSync(imagesDirectory);
+
+	const images = filenames.map((filename) => ({
+		src: `/img/banner/${filename}`,
+		alt: `banner ${filename.replace(/\.[^/.]+$/, "")}`,
+	}));
+
+	return images;
+}
+
+const valid = 600;
 
 export async function getTopAnime() {
 	let error = false;

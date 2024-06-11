@@ -37,8 +37,8 @@ export default function CardSlider({
 				</Button>
 			</div>
 			{err.isError ? (
-				<Card className="p-4 shadow-md bg-secondary w-full h-[200px] text-center flex items-center justify-center">
-					<p className="text-red-500 font-bold text-md">
+				<Card className="flex h-[200px] w-full items-center justify-center bg-secondary p-4 text-center shadow-md">
+					<p className="text-md font-bold text-red-500">
 						{err.message}
 					</p>
 				</Card>

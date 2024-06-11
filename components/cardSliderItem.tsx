@@ -4,7 +4,7 @@ import { CarouselItem } from "@/components/ui/carousel";
 
 const CardSliderItem = ({ item }: { item: any }) => {
 	return (
-		<CarouselItem className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6 h-fit pl-2 md:pl-4">
+		<CarouselItem className="h-fit basis-1/2 pl-2 sm:basis-1/3 md:basis-1/4 md:pl-4 lg:basis-1/5 xl:basis-1/6">
 			<div className="flex flex-col space-y-2">
 				<AspectRatio ratio={2 / 3} className="cursor-grab">
 					<Image
@@ -25,7 +25,7 @@ const CardSliderItem = ({ item }: { item: any }) => {
 						className="rounded-md object-cover shadow-lg"
 					/>
 				</AspectRatio>
-				<h2 className="font-bold line-clamp-2">
+				<h2 className="line-clamp-2 font-bold">
 					{item.title || item.name}
 				</h2>
 			</div>

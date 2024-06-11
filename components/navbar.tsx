@@ -54,7 +54,7 @@ function MobileNav() {
 function DesktopNav() {
 	return (
 		<>
-			<div className="hidden md:flex items-center gap-2">
+			<div className="hidden items-center gap-2 md:flex">
 				<Button variant="ghost" asChild>
 					<Link className="font-bold" href="/anime">
 						Anime
@@ -76,7 +76,7 @@ function DesktopNav() {
 					</Link>
 				</Button>
 			</div>
-			<div className="hidden md:flex items-center gap-2">
+			<div className="hidden items-center gap-2 md:flex">
 				<Button variant="default" asChild>
 					<Link
 						className="font-bold"
@@ -99,7 +99,7 @@ export default function Navbar() {
 				<div>
 					<Button variant="default" asChild>
 						<Link
-							className="font-bold text-xl text-primary-foreground"
+							className="text-xl font-bold text-primary-foreground"
 							href="/"
 						>
 							NimeTop

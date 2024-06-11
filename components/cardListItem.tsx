@@ -13,7 +13,7 @@ export default function CardListItem({
 		<div className="flex flex-col space-y-2">
 			<AspectRatio
 				ratio={2 / 3}
-				className="hover:scale-105 duration-200 ease-in-out cursor-pointer"
+				className="cursor-pointer duration-200 ease-in-out hover:scale-105"
 			>
 				<Image
 					src={
@@ -31,19 +31,19 @@ export default function CardListItem({
 					}
 					className="rounded-md object-cover shadow-lg"
 				/>
-				<Badge variant="default" className="absolute top-1 left-1">
+				<Badge variant="default" className="absolute left-1 top-1">
 					#{index + 1}
 				</Badge>
 				{item.score && (
 					<Badge
 						variant="secondary"
-						className="absolute top-1 right-1"
+						className="absolute right-1 top-1"
 					>
 						{item.score}
 					</Badge>
 				)}
 			</AspectRatio>
-			<h2 className="font-bold line-clamp-2">
+			<h2 className="line-clamp-2 font-bold">
 				{item.title || item.name}
 			</h2>
 		</div>

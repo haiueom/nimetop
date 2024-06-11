@@ -4,6 +4,7 @@ import {
 	getTopCharacter,
 	getTopManga,
 	getTopPeople,
+	getBannerImages,
 } from "@/app/actions";
 import CardSlider from "@/components/cardSlider";
 
@@ -12,10 +13,11 @@ export default async function Home() {
 	const tm = await getTopManga();
 	const tp = await getTopPeople();
 	const tc = await getTopCharacter();
+	const images = await getBannerImages();
 
 	return (
-		<main className="w-full flex flex-col items-center space-y-10">
-			<Hero />
+		<main className="flex w-full flex-col items-center space-y-10">
+			<Hero images={images} />
 			<CardSlider
 				href="/anime"
 				title="Top Anime"
