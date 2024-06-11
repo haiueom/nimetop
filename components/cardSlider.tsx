@@ -37,10 +37,17 @@ export default function CardSlider({
 				</Button>
 			</div>
 			{err.isError ? (
-				<Card className="flex h-[200px] w-full items-center justify-center bg-secondary p-4 text-center shadow-md">
-					<p className="text-md font-bold text-red-500">
-						{err.message}
+				<Card className="flex h-[200px] w-full flex-col items-center justify-center gap-4 bg-secondary p-4 text-center shadow-md">
+					<p className="text-md font-bold">
+						{err.message || "Terjadi error saat mengambil data"}
 					</p>
+					<Button
+						variant="default"
+						size="sm"
+						onClick={() => window.location.reload()}
+					>
+						Refresh
+					</Button>
 				</Card>
 			) : (
 				<Carousel
