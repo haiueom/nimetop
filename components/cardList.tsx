@@ -1,5 +1,8 @@
 import CardListItem from "@/components/cardListItem";
 import { Card } from "@/components/ui/card";
+import type { Anime, Manga, Character, Person } from "@/lib/types/jikan";
+
+type Item = Anime | Manga | Character | Person;
 
 export default function CardList({
 	title,
@@ -7,11 +10,11 @@ export default function CardList({
 	err,
 }: {
 	title: string;
-	data: any;
+	data: Item[];
 	err: {
 		isError: boolean;
 		message: string;
-		errMsg: any;
+		errMsg: unknown;
 	};
 }) {
 	return (
@@ -28,7 +31,7 @@ export default function CardList({
 				</Card>
 			) : (
 				<div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6">
-					{data.slice(0, -1).map((item: any, index: number) => (
+					{data.slice(0, -1).map((item, index) => (
 						<CardListItem
 							item={item}
 							key={item.mal_id}

@@ -1,6 +1,8 @@
 import { getTopAnime } from "@/app/actions";
 import CardList from "@/components/cardList";
 
+export const revalidate = 600;
+
 export const metadata = {
 	title: "Anime Ranking | NimeTop",
 	description: "Anime ranking based on MAL",

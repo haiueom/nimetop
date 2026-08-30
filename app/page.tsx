@@ -8,12 +8,16 @@ import {
 } from "@/app/actions";
 import CardSlider from "@/components/cardSlider";
 
+export const revalidate = 600;
+
 export default async function Home() {
-	const ta = await getTopAnime();
-	const tm = await getTopManga();
-	const tp = await getTopPeople();
-	const tc = await getTopCharacter();
-	const images = await getBannerImages();
+	const [ta, tm, tp, tc, images] = await Promise.all([
+		getTopAnime(),
+		getTopManga(),
+		getTopPeople(),
+		getTopCharacter(),
+		getBannerImages(),
+	]);
 
 	return (
 		<main className="flex w-full flex-col items-center space-y-10">

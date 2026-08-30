@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import CardListItem from "@/components/cardSliderItem";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import type { JikanItem } from "@/lib/types/jikan";
 
 export default function CardSlider({
 	title,
@@ -18,11 +19,11 @@ export default function CardSlider({
 	href,
 }: {
 	title: string;
-	data: any;
+	data: JikanItem[];
 	err: {
 		isError: boolean;
 		message: string;
-		errMsg: any;
+		errMsg: unknown;
 	};
 	href: string;
 }) {
@@ -57,7 +58,7 @@ export default function CardSlider({
 					className="w-full"
 				>
 					<CarouselContent className="-ml-2 md:-ml-4">
-						{data.map((item: any) => (
+						{data.map((item) => (
 							<CardListItem item={item} key={item.mal_id} />
 						))}
 					</CarouselContent>

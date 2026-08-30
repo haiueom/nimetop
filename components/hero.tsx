@@ -24,7 +24,6 @@ export default function Hero({
 			plugins={[
 				Autoplay({
 					delay: 5000,
-					loop: true,
 				}),
 			]}
 			opts={{
