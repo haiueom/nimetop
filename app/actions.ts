@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import path from "path";
-import type { Anime, Manga, Character, Person, PersonFull } from "@tutkli/jikan-ts";
+import type { Anime, Manga, Character, CharacterFull, Person, PersonFull } from "@tutkli/jikan-ts";
 
 export async function getBannerImages() {
 	const imagesDirectory = path.join(process.cwd(), "public/img/banner");
@@ -176,4 +176,8 @@ export async function getMangaById(id: number): Promise<SingleResult<Manga>> {
 
 export async function getPersonById(id: number): Promise<SingleResult<PersonFull>> {
 	return fetchJikanSingle<PersonFull>(`people/${id}/full`, `person-${id}`);
+}
+
+export async function getCharacterById(id: number): Promise<SingleResult<CharacterFull>> {
+	return fetchJikanSingle<CharacterFull>(`characters/${id}/full`, `character-${id}`);
 }
