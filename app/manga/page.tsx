@@ -5,7 +5,7 @@ export const revalidate = 600;
 
 export const metadata = {
 	title: "Manga Ranking | NimeTop",
-	description: "Manga ranking based on MAL",
+	description: "Manga ranking based on AniList",
 };
 
 export default async function Home() {

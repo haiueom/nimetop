@@ -2,12 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import type { JikanItem } from "@/lib/types/jikan";
+import type { AniListItem } from "@/lib/types/anilist";
 
-const getHref = (item: JikanItem): string => {
-	if ("episodes" in item) return `/anime/${item.mal_id}`;
-	if ("chapters" in item || "volumes" in item) return `/manga/${item.mal_id}`;
-	if ("website_url" in item) return `/people/${item.mal_id}`;
+const getHref = (item: AniListItem): string => {
+	if ("type" in item && (item.type === "ANIME" || item.type === "MANGA")) {
+		return item.type === "ANIME" ? `/anime/${item.id}` : `/manga/${item.id}`;
+	}
+	if ("primaryOccupations" in item || "staffMedia" in item) {
+		return `/staff/${item.id}`;
+	}
+	if ("media" in item || "image" in item) {
+		return `/character/${item.id}`;
+	}
 	return "#";
 };
 
@@ -15,13 +21,27 @@ export default function CardListItem({
 	item,
 	index,
 }: {
-	item: JikanItem;
+	item: AniListItem;
 	index: number;
 }) {
-	const src = item.images.webp?.image_url || item.images.jpg.image_url;
-	const blur = item.images.webp?.small_image_url || item.images.jpg.small_image_url;
-	const label = "title" in item ? item.title : item.name;
-	const score = "score" in item ? item.score : null;
+	const src =
+		("coverImage" in item
+			? item.coverImage?.large || item.coverImage?.medium
+			: item.image?.large || item.image?.medium) || "";
+	const blur =
+		("coverImage" in item
+			? item.coverImage?.medium || item.coverImage?.large
+			: item.image?.medium || item.image?.large) || "";
+	const label =
+		("title" in item && item.title
+			? item.title.english || item.title.romaji || item.title.native
+			: "name" in item && item.name
+				? item.name.full
+				: "") || "";
+	const score =
+		"averageScore" in item && typeof item.averageScore === "number"
+			? (item.averageScore / 10).toFixed(1)
+			: null;
 	const href = getHref(item);
 
 	const content = (
@@ -30,15 +50,19 @@ export default function CardListItem({
 				ratio={2 / 3}
 				className="cursor-pointer overflow-hidden rounded-md duration-200 ease-in-out hover:scale-105"
 			>
-				<Image
-					src={src}
-					fill
-					sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
-					alt={label}
-					placeholder="blur"
-					blurDataURL={blur}
-					className="object-cover shadow-lg"
-				/>
+				{src ? (
+					<Image
+						src={src}
+						fill
+						sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
+						alt={label}
+						placeholder="blur"
+						blurDataURL={blur}
+						className="object-cover shadow-lg"
+					/>
+				) : (
+					<div className="flex h-full w-full items-center justify-center bg-muted" />
+				)}
 				<Badge variant="default" className="absolute left-1 top-1">
 					#{index + 1}
 				</Badge>

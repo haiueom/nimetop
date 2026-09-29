@@ -3,7 +3,7 @@ import {
 	getTopAnime,
 	getTopCharacter,
 	getTopManga,
-	getTopPeople,
+	getTopStaff,
 	getBannerImages,
 } from "@/app/actions";
 import CardSlider from "@/components/cardSlider";
@@ -14,7 +14,7 @@ export default async function Home() {
 	const [ta, tm, tp, tc, images] = await Promise.all([
 		getTopAnime(),
 		getTopManga(),
-		getTopPeople(),
+		getTopStaff(),
 		getTopCharacter(),
 		getBannerImages(),
 	]);
@@ -41,8 +41,8 @@ export default async function Home() {
 				err={tc.error}
 			/>
 			<CardSlider
-				href="/people"
-				title="Top People"
+				href="/staff"
+				title="Top Staff"
 				data={tp.data}
 				err={tp.error}
 			/>

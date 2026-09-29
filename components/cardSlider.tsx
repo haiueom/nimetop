@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import CardListItem from "@/components/cardSliderItem";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-import type { JikanItem } from "@/lib/types/jikan";
+import type { AniListItem } from "@/lib/types/anilist";
 
 export default function CardSlider({
 	title,
@@ -19,7 +19,7 @@ export default function CardSlider({
 	href,
 }: {
 	title: string;
-	data: JikanItem[];
+	data: AniListItem[];
 	err: {
 		isError: boolean;
 		message: string;
@@ -59,7 +59,7 @@ export default function CardSlider({
 				>
 					<CarouselContent className="-ml-2 md:-ml-4">
 						{data.map((item) => (
-							<CardListItem item={item} key={item.mal_id} />
+							<CardListItem item={item} key={item.id} />
 						))}
 					</CarouselContent>
 					<CarouselPrevious className="hidden lg:flex" />

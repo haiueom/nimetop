@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 const links = [
 	{ href: "/anime", label: "Anime" },
 	{ href: "/manga", label: "Manga" },
-	{ href: "/people", label: "People" },
+	{ href: "/staff", label: "Staff" },
 	{ href: "/character", label: "Character" },
 ];
 

@@ -8,26 +8,41 @@ import type { Metadata } from "next";
 
 export const revalidate = 600;
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}): Promise<Metadata> {
 	const { id } = await params;
 	const result = await getAnimeById(Number(id));
 	if (result.data) {
+		const title =
+			result.data.title.english ||
+			result.data.title.romaji ||
+			result.data.title.native ||
+			"Anime";
 		return {
-			title: `${result.data.title} | NimeTop`,
-			description: result.data.synopsis?.slice(0, 160) ?? `Anime details for ${result.data.title}`,
+			title: `${title} | NimeTop`,
+			description:
+				result.data.description?.replace(/<[^>]*>/g, "").slice(0, 160) ??
+				`Anime details for ${title}`,
 		};
 	}
 	return { title: "Anime Not Found | NimeTop" };
 }
 
-export default async function AnimeDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AnimeDetailPage({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
 	const { id } = await params;
 	const result = await getAnimeById(Number(id));
 
 	if (result.error.isError || !result.data) {
 		return (
 			<main className="flex w-full flex-col items-center space-y-10">
-				<div className="text-center space-y-4">
+				<div className="space-y-4 text-center">
 					<h1 className="text-2xl font-bold">Failed to load anime</h1>
 					<p className="text-muted-foreground">{result.error.message}</p>
 					<Button asChild>
@@ -41,6 +56,10 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 	}
 
 	const anime = result.data;
+	const title = anime.title.english || anime.title.romaji || anime.title.native || "Anime";
+	const coverSrc = anime.coverImage.extraLarge || anime.coverImage.large || anime.coverImage.medium || "";
+	const rank = anime.rankings?.find((r) => r.type === "RATED")?.rank;
+	const score = anime.averageScore ? (anime.averageScore / 10).toFixed(1) : null;
 
 	return (
 		<main className="flex w-full flex-col items-center space-y-6">
@@ -50,41 +69,47 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 						<ArrowLeft className="mr-2 h-4 w-4" /> Back
 					</Link>
 				</Button>
-				<Button variant="outline" size="sm" asChild>
-					<Link href={anime.url} target="_blank">
-						<ExternalLink className="mr-2 h-4 w-4" /> MyAnimeList
-					</Link>
-				</Button>
+				{anime.siteUrl && (
+					<Button variant="outline" size="sm" asChild>
+						<Link href={anime.siteUrl} target="_blank">
+							<ExternalLink className="mr-2 h-4 w-4" /> AniList
+						</Link>
+					</Button>
+				)}
 			</div>
 
 			<div className="grid w-full gap-6 md:grid-cols-[300px_1fr]">
 				<div className="space-y-4">
 					<div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg shadow-lg">
-						<Image
-							src={anime.images.webp?.large_image_url || anime.images.jpg.large_image_url || ""}
-							fill
-							sizes="(max-width: 768px) 100vw, 300px"
-							alt={anime.title}
-							className="object-cover"
-							priority
-						/>
+						{coverSrc ? (
+							<Image
+								src={coverSrc}
+								fill
+								sizes="(max-width: 768px) 100vw, 300px"
+								alt={title}
+								className="object-cover"
+								priority
+							/>
+						) : (
+							<div className="flex h-full w-full items-center justify-center bg-muted" />
+						)}
 					</div>
 					<div className="flex flex-wrap gap-2">
-						{anime.rank && <Badge variant="default">Rank #{anime.rank}</Badge>}
-						{anime.score && <Badge variant="secondary">Score: {anime.score}</Badge>}
-						{anime.type && <Badge variant="outline">{anime.type}</Badge>}
+						{rank && <Badge variant="default">Rank #{rank}</Badge>}
+						{score && <Badge variant="secondary">Score: {score}</Badge>}
+						{anime.format && <Badge variant="outline">{anime.format}</Badge>}
 						{anime.status && <Badge variant="outline">{anime.status}</Badge>}
 					</div>
 				</div>
 
 				<div className="space-y-4">
 					<div>
-						<h1 className="text-3xl font-bold">{anime.title}</h1>
-						{anime.title_japanese && (
-							<p className="text-lg text-muted-foreground">{anime.title_japanese}</p>
+						<h1 className="text-3xl font-bold">{title}</h1>
+						{anime.title.native && (
+							<p className="text-lg text-muted-foreground">{anime.title.native}</p>
 						)}
-						{anime.title_english && anime.title_english !== anime.title && (
-							<p className="text-muted-foreground">{anime.title_english}</p>
+						{anime.title.romaji && anime.title.english && anime.title.romaji !== anime.title.english && (
+							<p className="text-muted-foreground">{anime.title.romaji}</p>
 						)}
 					</div>
 
@@ -98,7 +123,7 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 						{anime.duration && (
 							<div>
 								<p className="font-semibold">Duration</p>
-								<p className="text-muted-foreground">{anime.duration}</p>
+								<p className="text-muted-foreground">{anime.duration} mins</p>
 							</div>
 						)}
 						{anime.source && (
@@ -107,10 +132,12 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 								<p className="text-muted-foreground">{anime.source}</p>
 							</div>
 						)}
-						{anime.season && anime.year && (
+						{anime.season && anime.seasonYear && (
 							<div>
 								<p className="font-semibold">Season</p>
-								<p className="text-muted-foreground">{anime.season} {anime.year}</p>
+								<p className="text-muted-foreground">
+									{anime.season} {anime.seasonYear}
+								</p>
 							</div>
 						)}
 						{anime.popularity && (
@@ -119,33 +146,35 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 								<p className="text-muted-foreground">#{anime.popularity}</p>
 							</div>
 						)}
-						{anime.members && (
+						{anime.favourites && (
 							<div>
-								<p className="font-semibold">Members</p>
-								<p className="text-muted-foreground">{anime.members.toLocaleString()}</p>
+								<p className="font-semibold">Favorites</p>
+								<p className="text-muted-foreground">
+									{anime.favourites.toLocaleString()}
+								</p>
 							</div>
 						)}
 					</div>
 
-					{anime.genres.length > 0 && (
+					{anime.genres && anime.genres.length > 0 && (
 						<div>
 							<p className="mb-2 font-semibold">Genres</p>
 							<div className="flex flex-wrap gap-2">
 								{anime.genres.map((genre) => (
-									<Badge key={genre.mal_id} variant="secondary">
-										{genre.name}
+									<Badge key={genre} variant="secondary">
+										{genre}
 									</Badge>
 								))}
 							</div>
 						</div>
 					)}
 
-					{anime.studios.length > 0 && (
+					{anime.studios?.nodes && anime.studios.nodes.length > 0 && (
 						<div>
 							<p className="mb-2 font-semibold">Studios</p>
 							<div className="flex flex-wrap gap-2">
-								{anime.studios.map((studio) => (
-									<span key={studio.mal_id} className="text-muted-foreground">
+								{anime.studios.nodes.map((studio, idx) => (
+									<span key={idx} className="text-muted-foreground">
 										{studio.name}
 									</span>
 								))}
@@ -153,17 +182,13 @@ export default async function AnimeDetailPage({ params }: { params: Promise<{ id
 						</div>
 					)}
 
-					{anime.synopsis && (
+					{anime.description && (
 						<div>
 							<h2 className="mb-2 text-lg font-semibold">Synopsis</h2>
-							<p className="leading-relaxed text-muted-foreground">{anime.synopsis}</p>
-						</div>
-					)}
-
-					{anime.background && (
-						<div>
-							<h2 className="mb-2 text-lg font-semibold">Background</h2>
-							<p className="leading-relaxed text-muted-foreground">{anime.background}</p>
+							<div
+								className="leading-relaxed text-muted-foreground [&>p]:mb-2"
+								dangerouslySetInnerHTML={{ __html: anime.description }}
+							/>
 						</div>
 					)}
 				</div>

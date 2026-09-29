@@ -5,7 +5,7 @@ export const revalidate = 600;
 
 export const metadata = {
 	title: "Character Ranking | NimeTop",
-	description: "Character ranking based on MAL",
+	description: "Character ranking based on AniList",
 };
 
 export default async function Home() {
