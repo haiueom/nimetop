@@ -1,5 +1,6 @@
 import { getMangaById } from "@/app/actions";
 import Image from "next/image";
+import { sanitizeHtml } from "@/lib/utils";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink } from "lucide-react";
@@ -177,7 +178,7 @@ export default async function MangaDetailPage({
 							<h2 className="mb-2 text-lg font-semibold">Synopsis</h2>
 							<div
 								className="leading-relaxed text-muted-foreground [&>p]:mb-2"
-								dangerouslySetInnerHTML={{ __html: manga.description }}
+								dangerouslySetInnerHTML={{ __html: sanitizeHtml(manga.description) }}
 							/>
 						</div>
 					)}

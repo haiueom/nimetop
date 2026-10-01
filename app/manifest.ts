@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
 	return {
 		name: "NimeTop",
 		short_name: "NimeTop",
-		description: "Ranking based on MAL",
+		description: "Ranking based on AniList",
 		start_url: "/",
 		display: "standalone",
 		background_color: "#fff",

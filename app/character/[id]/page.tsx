@@ -1,5 +1,6 @@
 import { getCharacterById } from "@/app/actions";
 import Image from "next/image";
+import { sanitizeHtml } from "@/lib/utils";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink } from "lucide-react";
@@ -126,7 +127,7 @@ export default async function CharacterDetailPage({
 							<h2 className="mb-2 text-lg font-semibold">About</h2>
 							<div
 								className="leading-relaxed text-muted-foreground [&>p]:mb-2"
-								dangerouslySetInnerHTML={{ __html: character.description }}
+								dangerouslySetInnerHTML={{ __html: sanitizeHtml(character.description) }}
 							/>
 						</div>
 					)}

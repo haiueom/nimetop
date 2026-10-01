@@ -1,5 +1,6 @@
 import { getStaffById } from "@/app/actions";
 import Image from "next/image";
+import { sanitizeHtml } from "@/lib/utils";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink, Globe } from "lucide-react";
@@ -180,7 +181,7 @@ export default async function StaffDetailPage({
 							<h2 className="mb-2 text-lg font-semibold">About</h2>
 							<div
 								className="leading-relaxed text-muted-foreground [&>p]:mb-2"
-								dangerouslySetInnerHTML={{ __html: staff.description }}
+								dangerouslySetInnerHTML={{ __html: sanitizeHtml(staff.description) }}
 							/>
 						</div>
 					)}

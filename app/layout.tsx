@@ -17,7 +17,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
 	title: "Nimetop by Haiueom",
-	description: "Ranking based on MAL",
+	description: "Ranking based on AniList",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="id" suppressHydrationWarning>
 			<body
 				className={cn(
 					"flex min-h-screen flex-col items-center bg-background font-sans antialiased",
